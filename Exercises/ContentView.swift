@@ -1,10 +1,3 @@
-//
-//  ContentView.swift
-//  Exercises
-//
-//  Created by Artur Spek on 21/06/2025.
-//
-
 import SwiftUI
 
 let api_url = "https://exercises-581797442525.europe-central2.run.app/today"

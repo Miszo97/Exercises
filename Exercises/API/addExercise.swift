@@ -1,11 +1,3 @@
-//
-//  File 2.swift
-//  Exercises
-//
-//  Created by Artur Spek on 14/09/2025.
-//
-
-
 import SwiftUI
 
 func addExercise(name: String, duration: Int? = nil, reps: Int? = nil, unit: String? = nil) async throws {
