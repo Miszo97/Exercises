@@ -36,8 +36,6 @@ struct AddRepsExerciseRow: View {
     let onAdd: () async -> Void
     @State var buttonText: String = "Add"
 
-    
-
     var body: some View {
         HStack {
             Text(name)
@@ -58,7 +56,9 @@ struct AddRepsExerciseRow: View {
                 Button(buttonText) {
                     Task {
                         buttonText = "Adding..."
-                        try await addExercise(name: name, reps: Int(toAdd))
+                        if let reps = Int(toAdd) {
+                            try await addRepsExercise(name: name, reps: reps)
+                        }
                         await onAdd()
                         buttonText = "Add"
                     }
@@ -75,7 +75,6 @@ struct AddDurationExerciseRow: View {
     let onAdd: () async -> Void
     @State var buttonText: String = "Add"
 
-    
     var body: some View {
         HStack {
             Text(name)
@@ -95,7 +94,9 @@ struct AddDurationExerciseRow: View {
                 Button(buttonText) {
                     Task {
                         buttonText = "Adding..."
-                        try await addExercise(name: name, duration: Int(toAdd), unit: "seconds")
+                        if let duration = Int(toAdd) {
+                            try await addDurationExercise(name: name, duration: duration, unit: "seconds")
+                        }
                         await onAdd()
                         buttonText = "Add"
                     }

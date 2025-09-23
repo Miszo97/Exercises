@@ -43,9 +43,10 @@ struct ContentView: View {
                         AddDurationExerciseRow(name: exercise.name, onAdd: loadExercises)
                     }
                 }
-                Spacer()
-                ExercisesContainer(rows: rows)
+
             }.padding(.bottom, 150).padding(.top, 20)
+            Spacer()
+            ExercisesContainer(rows: rows)
         }
         .padding()
         .task {
