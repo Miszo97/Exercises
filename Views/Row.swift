@@ -45,11 +45,12 @@ struct AddRepsExerciseRow: View {
                     .keyboardType(.numberPad)
                     .focused($isInputActive)
                     .toolbar {
-                        ToolbarItemGroup(placement: .keyboard) {
-                            Spacer()
-
-                            Button("Done") {
-                                isInputActive = false
+                        if isInputActive {
+                            ToolbarItemGroup(placement: .keyboard) {
+                                Spacer()
+                                Button("Done") {
+                                    isInputActive = false
+                                }
                             }
                         }
                 }
@@ -84,13 +85,15 @@ struct AddDurationExerciseRow: View {
                     .keyboardType(.numberPad)
                     .focused($isInputActive)
                     .toolbar {
-                        ToolbarItemGroup(placement: .keyboard) {
-                            Spacer()
-                            Button("Done") {
-                                isInputActive = false
+                        if isInputActive {
+                            ToolbarItemGroup(placement: .keyboard) {
+                                Spacer()
+                                Button("Done") {
+                                    isInputActive = false
+                                }
                             }
                         }
-                }
+                    }
                 Button(buttonText) {
                     Task {
                         buttonText = "Adding..."
