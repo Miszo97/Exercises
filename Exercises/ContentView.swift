@@ -11,17 +11,35 @@ struct AddableExercise: Identifiable {
     let id = UUID()
     let name: String
     let type: AddableExerciseType
+    let valueToAdd: Int
 }
+
+
 
 struct ContentView: View {
     @State private var rows: [ExerciseType] = []
     
-    // All available "add" exercises are defined here
     private let addableExercises: [AddableExercise] = [
-        .init(name: "push ups", type: .reps),
-        .init(name: "band exterior top", type: .reps),
-        .init(name: "plank", type: .duration),
-        .init(name: "plank both sides", type: .duration),
+        .init(
+            name: "push ups",
+            type: .reps,
+            valueToAdd: UserDefaults.standard.integer(forKey: "exercises_settings_push ups_to_add") == 0 ? 20 : UserDefaults.standard.integer(forKey: "exercises_settings_push ups_to_add")
+        ),
+        .init(
+            name: "band exterior top",
+            type: .reps,
+            valueToAdd: UserDefaults.standard.integer(forKey: "exercises_settings_band exterior top_to_add") == 0 ? 20 : UserDefaults.standard.integer(forKey: "exercises_settings_band exterior top_to_add")
+        ),
+        .init(
+            name: "plank",
+            type: .duration,
+            valueToAdd: UserDefaults.standard.integer(forKey: "exercises_settings_plank_to_add") == 0 ? 60 : UserDefaults.standard.integer(forKey: "exercises_settings_plank_to_add")
+        ),
+        .init(
+            name: "plank both sides",
+            type: .duration,
+            valueToAdd: UserDefaults.standard.integer(forKey: "exercises_settings_plank both sides_to_add") == 0 ? 60 : UserDefaults.standard.integer(forKey: "exercises_settings_plank both sides_to_add")
+        )
     ]
 
     var body: some View {
@@ -38,9 +56,9 @@ struct ContentView: View {
                 ForEach(addableExercises) { exercise in
                     switch exercise.type {
                     case .reps:
-                        AddRepsExerciseRow(name: exercise.name, onAdd: loadExercises)
+                        AddRepsExerciseRow(name: exercise.name, onAdd: loadExercises).padding()
                     case .duration:
-                        AddDurationExerciseRow(name: exercise.name, onAdd: loadExercises)
+                        AddDurationExerciseRow(name: exercise.name, onAdd: loadExercises).padding()
                     }
                 }
 
@@ -87,6 +105,8 @@ struct ContentView: View {
 }
 
 struct Title: View {
+    let api_url = "https://exercises-581797442525.europe-central2.run.app"
+
     var body: some View {
         HStack {
             Header(content: "Exercises")

@@ -50,6 +50,7 @@ struct AddRepsExerciseRow: View {
                                 Spacer()
                                 Button("Done") {
                                     isInputActive = false
+                                    UserDefaults.standard.set(toAdd, forKey: "exercises_settings_\(name)_to_add")
                                 }
                             }
                         }
@@ -115,3 +116,4 @@ struct AddDurationExerciseRow: View {
     RepsExerciseRow(name: "Push Ups", value: "12")
     DurationExerciseRow(name: "Plank", value: "60")
 }
+
