@@ -56,9 +56,9 @@ struct ContentView: View {
                 ForEach(addableExercises) { exercise in
                     switch exercise.type {
                     case .reps:
-                        AddRepsExerciseRow(name: exercise.name, onAdd: loadExercises).padding()
+                        AddRepsExerciseRow(name: exercise.name, onAdd: loadExercises, toAdd: exercise.valueToAdd).padding()
                     case .duration:
-                        AddDurationExerciseRow(name: exercise.name, onAdd: loadExercises).padding()
+                        AddDurationExerciseRow(name: exercise.name, onAdd: loadExercises, toAdd: exercise.valueToAdd).padding()
                     }
                 }
 

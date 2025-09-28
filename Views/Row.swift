@@ -30,11 +30,17 @@ struct DurationExerciseRow: View {
 }
 
 struct AddRepsExerciseRow: View {
-    @State private var toAdd: String = "20"
-    @FocusState var isInputActive: Bool
-    var name: String
+    @State private var toAdd: String
+    @FocusState private var isInputActive: Bool
+    let name: String
     let onAdd: () async -> Void
-    @State var buttonText: String = "Add"
+    @State private var buttonText: String = "Add"
+
+    init(name: String, onAdd: @escaping () async -> Void, toAdd: Int) {
+        self.name = name
+        self.onAdd = onAdd
+        self._toAdd = State(initialValue: String(toAdd))
+    }
 
     var body: some View {
         HStack {
@@ -71,11 +77,17 @@ struct AddRepsExerciseRow: View {
 }
 
 struct AddDurationExerciseRow: View {
-    @State private var toAdd: String = "60"
-    @FocusState var isInputActive: Bool
-    var name: String
+    @State private var toAdd: String
+    @FocusState private var isInputActive: Bool
+    let name: String
     let onAdd: () async -> Void
-    @State var buttonText: String = "Add"
+    @State private var buttonText: String = "Add"
+
+    init(name: String, onAdd: @escaping () async -> Void, toAdd: Int) {
+        self.name = name
+        self.onAdd = onAdd
+        self._toAdd = State(initialValue: String(toAdd))
+    }
 
     var body: some View {
         HStack {
@@ -91,6 +103,7 @@ struct AddDurationExerciseRow: View {
                                 Spacer()
                                 Button("Done") {
                                     isInputActive = false
+                                    UserDefaults.standard.set(toAdd, forKey: "exercises_settings_\(name)_to_add")
                                 }
                             }
                         }
@@ -111,9 +124,8 @@ struct AddDurationExerciseRow: View {
 }
 
 #Preview {
-    AddRepsExerciseRow(name: "Push Ups", onAdd: { print("hello AddRepsExerciseRow") })
-    AddDurationExerciseRow(name: "Plank", onAdd: { print("hello AddDurationExerciseRow")})
+    AddRepsExerciseRow(name: "Push Ups", onAdd: { print("hello AddRepsExerciseRow") }, toAdd: 20)
+    AddDurationExerciseRow(name: "Plank", onAdd: { print("hello AddDurationExerciseRow")}, toAdd: 60)
     RepsExerciseRow(name: "Push Ups", value: "12")
     DurationExerciseRow(name: "Plank", value: "60")
 }
-
