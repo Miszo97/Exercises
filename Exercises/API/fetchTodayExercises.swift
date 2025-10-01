@@ -6,16 +6,16 @@ enum Err: Error {
     case RequestFailed
 }
 
-struct Response: Decodable {
-    var exercise_names: [String]
-    var rows: [RowAPI]
-}
-
 struct Exercise: Codable {
     let name: String
     let type: String
     let reps: Int?
     let duration: Int?
+}
+
+// Wrapper for { "exercises": [ ... ] }
+private struct TodayExercisesResponse: Decodable {
+    let exercises: [Exercise]
 }
 
 func fetch_today_exercises() async throws -> [Exercise] {
@@ -36,6 +36,19 @@ func fetch_today_exercises() async throws -> [Exercise] {
     print("Received data:", String(data: data, encoding: .utf8) ?? "No string")
 
     let decoder = JSONDecoder()
-    let exercises = try decoder.decode([Exercise].self, from: data) // decode array directly
-    return exercises
+
+    // First try decoding the wrapper { "exercises": [...] }
+    do {
+        let wrapped = try decoder.decode(TodayExercisesResponse.self, from: data)
+        return wrapped.exercises
+    } catch {
+        // Fallback: try decoding a top-level array [ ... ]
+        do {
+            let exercises = try decoder.decode([Exercise].self, from: data)
+            return exercises
+        } catch {
+            print("Decoding failed. Neither wrapper nor array matched. Error: \(error)")
+            throw error
+        }
+    }
 }
