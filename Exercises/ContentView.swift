@@ -14,8 +14,6 @@ struct AddableExercise: Identifiable {
     let valueToAdd: Int
 }
 
-
-
 struct ContentView: View {
     @State private var rows: [ExerciseType] = []
     
@@ -46,23 +44,18 @@ struct ContentView: View {
         VStack {
             Title()
             
-            Button ("get exercises") {
+            Button {
                 Task {
                     await loadExercises()
                 }
+            } label: {
+                Image(systemName: "arrow.clockwise")
+                    .font(.title2)
+                    .accessibilityLabel("Get exercises")
             }
 
-            VStack {
-                ForEach(addableExercises) { exercise in
-                    switch exercise.type {
-                    case .reps:
-                        AddRepsExerciseRow(name: exercise.name, onAdd: loadExercises, toAdd: exercise.valueToAdd).padding()
-                    case .duration:
-                        AddDurationExerciseRow(name: exercise.name, onAdd: loadExercises, toAdd: exercise.valueToAdd).padding()
-                    }
-                }
-
-            }.padding(.bottom, 150).padding(.top, 20)
+            AddExerciseList(addableExercises: addableExercises)
+            
             Spacer()
             ExercisesContainer(rows: rows)
         }
@@ -89,9 +82,7 @@ struct ContentView: View {
                 }
             }
             await MainActor.run {
-                self.rows = loadedRows.isEmpty
-                    ? [.duration(name: "No exercises found for today", value: "")]
-                    : loadedRows
+                self.rows = loadedRows
             }
         } catch {
             print("Failed to load exercises:", error)
@@ -105,7 +96,7 @@ struct ContentView: View {
 }
 
 struct Title: View {
-    let api_url = "https://exercises-581797442525.europe-central2.run.app"
+    let api_url = "https://exercises-581797442525.europe-central2.run.app/table"
 
     var body: some View {
         HStack {

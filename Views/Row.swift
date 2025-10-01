@@ -29,17 +29,21 @@ struct DurationExerciseRow: View {
     }
 }
 
-struct AddRepsExerciseRow: View {
+struct AddExerciseRow: View {
     @State private var toAdd: String
     @FocusState private var isInputActive: Bool
     let name: String
-    let onAdd: () async -> Void
+    let performAdd: (Int) async throws -> Void
     @State private var buttonText: String = "Add"
 
-    init(name: String, onAdd: @escaping () async -> Void, toAdd: Int) {
+    init(
+        name: String,
+        initialValue: Int,
+        performAdd: @escaping (Int) async throws -> Void
+    ) {
         self.name = name
-        self.onAdd = onAdd
-        self._toAdd = State(initialValue: String(toAdd))
+        self.performAdd = performAdd
+        self._toAdd = State(initialValue: String(initialValue))
     }
 
     var body: some View {
@@ -60,72 +64,39 @@ struct AddRepsExerciseRow: View {
                                 }
                             }
                         }
+                    }
+                Button(buttonText) {
+                    Task {
+                        buttonText = "Adding..."
+                        defer { buttonText = "Add" }
+                        if let value = Int(toAdd) {
+                            do {
+                                try await performAdd(value)
+                            } catch {
+                                print("Failed to add exercise:", error)
+                            }
+                        }
+
+                    }
                 }
-                Button(buttonText) {
-                    Task {
-                        buttonText = "Adding..."
-                        if let reps = Int(toAdd) {
-                            try await addRepsExercise(name: name, reps: reps)
-                        }
-                        await onAdd()
-                        buttonText = "Add"
-                    }
-                }.bold(true)
+                .bold()
             }
-        }.padding(.horizontal)
-    }
-}
-
-struct AddDurationExerciseRow: View {
-    @State private var toAdd: String
-    @FocusState private var isInputActive: Bool
-    let name: String
-    let onAdd: () async -> Void
-    @State private var buttonText: String = "Add"
-
-    init(name: String, onAdd: @escaping () async -> Void, toAdd: Int) {
-        self.name = name
-        self.onAdd = onAdd
-        self._toAdd = State(initialValue: String(toAdd))
-    }
-
-    var body: some View {
-        HStack {
-            Text(name)
-                .fontWeight(.bold)
-            HStack {
-                TextField("Enter a number", text: $toAdd)
-                    .keyboardType(.numberPad)
-                    .focused($isInputActive)
-                    .toolbar {
-                        if isInputActive {
-                            ToolbarItemGroup(placement: .keyboard) {
-                                Spacer()
-                                Button("Done") {
-                                    isInputActive = false
-                                    UserDefaults.standard.set(toAdd, forKey: "exercises_settings_\(name)_to_add")
-                                }
-                            }
-                        }
-                    }
-                Button(buttonText) {
-                    Task {
-                        buttonText = "Adding..."
-                        if let duration = Int(toAdd) {
-                            try await addDurationExercise(name: name, duration: duration, unit: "seconds")
-                        }
-                        await onAdd()
-                        buttonText = "Add"
-                    }
-                }.bold(true)
-            }
-        }.padding(.horizontal)
+        }
+        .padding(.horizontal)
     }
 }
 
 #Preview {
-    AddRepsExerciseRow(name: "Push Ups", onAdd: { print("hello AddRepsExerciseRow") }, toAdd: 20)
-    AddDurationExerciseRow(name: "Plank", onAdd: { print("hello AddDurationExerciseRow")}, toAdd: 60)
+    AddExerciseRow(
+        name: "Push Ups",
+        initialValue: 20,
+        performAdd: { value in try await addRepsExercise(name: "Push Ups", reps: value) }
+    )
+    AddExerciseRow(
+        name: "Plank",
+        initialValue: 60,
+        performAdd: { value in try await addDurationExercise(name: "Plank", duration: value, unit: "seconds") }
+    )
     RepsExerciseRow(name: "Push Ups", value: "12")
     DurationExerciseRow(name: "Plank", value: "60")
 }
