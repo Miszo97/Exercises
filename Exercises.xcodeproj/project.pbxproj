@@ -32,11 +32,6 @@
 			path = ExercisesTests;
 			sourceTree = "<group>";
 		};
-		758DCF3C2E7720BA008BC653 /* Views */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Views;
-			sourceTree = "<group>";
-		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,7 +55,6 @@
 		752D442F2E06AF7800A90B09 = {
 			isa = PBXGroup;
 			children = (
-				758DCF3C2E7720BA008BC653 /* Views */,
 				752D443A2E06AF7800A90B09 /* Exercises */,
 				7580FFB42E76F65E005DF751 /* ExercisesTests */,
 				752D44392E06AF7800A90B09 /* Products */,
@@ -93,7 +87,6 @@
 			);
 			fileSystemSynchronizedGroups = (
 				752D443A2E06AF7800A90B09 /* Exercises */,
-				758DCF3C2E7720BA008BC653 /* Views */,
 			);
 			name = Exercises;
 			packageProductDependencies = (

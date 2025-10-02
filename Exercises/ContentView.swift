@@ -7,38 +7,9 @@ enum AddableExerciseType {
     case duration
 }
 
-struct AddableExercise: Identifiable {
-    let id = UUID()
-    let name: String
-    let type: AddableExerciseType
-    let valueToAdd: Int
-}
 
 struct ContentView: View {
     @State private var rows: [ExerciseType] = []
-    
-    private let addableExercises: [AddableExercise] = [
-        .init(
-            name: "push ups",
-            type: .reps,
-            valueToAdd: UserDefaults.standard.integer(forKey: "exercises_settings_push ups_to_add") == 0 ? 20 : UserDefaults.standard.integer(forKey: "exercises_settings_push ups_to_add")
-        ),
-        .init(
-            name: "band exterior top",
-            type: .reps,
-            valueToAdd: UserDefaults.standard.integer(forKey: "exercises_settings_band exterior top_to_add") == 0 ? 20 : UserDefaults.standard.integer(forKey: "exercises_settings_band exterior top_to_add")
-        ),
-        .init(
-            name: "plank",
-            type: .duration,
-            valueToAdd: UserDefaults.standard.integer(forKey: "exercises_settings_plank_to_add") == 0 ? 60 : UserDefaults.standard.integer(forKey: "exercises_settings_plank_to_add")
-        ),
-        .init(
-            name: "plank both sides",
-            type: .duration,
-            valueToAdd: UserDefaults.standard.integer(forKey: "exercises_settings_plank both sides_to_add") == 0 ? 60 : UserDefaults.standard.integer(forKey: "exercises_settings_plank both sides_to_add")
-        )
-    ]
 
     var body: some View {
         VStack {
@@ -54,10 +25,10 @@ struct ContentView: View {
                     .accessibilityLabel("Get exercises")
             }
 
-            AddExerciseList(addableExercises: addableExercises)
+            AddExerciseListView(addableExercises: addableExercises)
             
             Spacer()
-            ExercisesContainer(rows: rows)
+            ExercisesContainerView(rows: rows)
         }
         .padding()
         .task {
@@ -68,8 +39,8 @@ struct ContentView: View {
 
     func loadExercises() async {
         do {
-            let exercises = try await fetch_today_exercises()
-            let loadedRows: [ExerciseType] = exercises.compactMap { exercise in
+            let exercises = try await fetchTodayExercises()
+            let loadedRows: [ExerciseRow] = exercises.compactMap { exercise in
                 switch exercise.type.lowercased() {
                 case "reps":
                     let value = exercise.reps.map { String($0) } ?? "—"
@@ -100,7 +71,7 @@ struct Title: View {
 
     var body: some View {
         HStack {
-            Header(content: "Exercises")
+            HeaderView(content: "Exercises")
             Link(destination: URL(string: api_url)!) {
                 Image(systemName: "link") // SF Symbol for a link
                     .resizable()

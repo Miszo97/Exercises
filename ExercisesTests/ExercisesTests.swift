@@ -8,7 +8,7 @@ func add_to_numbers(_ a: Int, _ b: Int) -> Int {
 struct ExercisesTests {
 
     @Test func example() async throws {
-        let results = try await fetch_today_exercises()
+        let results = try await fetchTodayExercises()
         #expect(results.count > 0)
         #expect(results[0].reps == 100)
     }
@@ -24,4 +24,3 @@ struct ExercisesTests {
     }
 
 }
-
