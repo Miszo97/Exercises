@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct Header: View {
+struct HeaderView: View {
     var content: String
     var body: some View {
         Text(content).font(.largeTitle)
@@ -8,5 +8,5 @@ struct Header: View {
 }
 
 #Preview {
-    Header(content: "Hello this is my app")
+    HeaderView(content: "Hello this is my app")
 }

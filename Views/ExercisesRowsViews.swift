@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct RepsExerciseRow: View {
+struct RepsExerciseRowView: View {
     var name: String
     var value: String
     
@@ -13,7 +13,7 @@ struct RepsExerciseRow: View {
     }
 }
 
-struct DurationExerciseRow: View {
+struct DurationExerciseRowView: View {
     var name: String
     var value: String
     var unit: String = "seconds"
@@ -29,11 +29,11 @@ struct DurationExerciseRow: View {
     }
 }
 
-struct AddExerciseRow: View {
+struct AddExerciseRowView: View {
     @State private var toAdd: String
     @FocusState private var isInputActive: Bool
     let name: String
-    let performAdd: (Int) async throws -> Void
+    let onAdd: (Int) async throws -> Void
     @State private var buttonText: String = "Add"
 
     init(
@@ -42,7 +42,7 @@ struct AddExerciseRow: View {
         performAdd: @escaping (Int) async throws -> Void
     ) {
         self.name = name
-        self.performAdd = performAdd
+        self.onAdd = performAdd
         self._toAdd = State(initialValue: String(initialValue))
     }
 
@@ -71,7 +71,7 @@ struct AddExerciseRow: View {
                         defer { buttonText = "Add" }
                         if let value = Int(toAdd) {
                             do {
-                                try await performAdd(value)
+                                try await onAdd(value)
                             } catch {
                                 print("Failed to add exercise:", error)
                             }
@@ -87,16 +87,16 @@ struct AddExerciseRow: View {
 }
 
 #Preview {
-    AddExerciseRow(
+    AddExerciseRowView(
         name: "Push Ups",
         initialValue: 20,
         performAdd: { value in try await addRepsExercise(name: "Push Ups", reps: value) }
     )
-    AddExerciseRow(
+    AddExerciseRowView(
         name: "Plank",
         initialValue: 60,
         performAdd: { value in try await addDurationExercise(name: "Plank", duration: value, unit: "seconds") }
     )
-    RepsExerciseRow(name: "Push Ups", value: "12")
-    DurationExerciseRow(name: "Plank", value: "60")
+    RepsExerciseRowView(name: "Push Ups", value: "12")
+    DurationExerciseRowView(name: "Plank", value: "60")
 }

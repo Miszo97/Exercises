@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct AddExerciseList: View {
+struct AddExerciseListView: View {
     let addableExercises: [AddableExercise]
 
     var body: some View {
@@ -15,7 +15,7 @@ struct AddExerciseList: View {
             ForEach(addableExercises) { exercise in
                 switch exercise.type {
                 case .reps:
-                    AddExerciseRow(
+                    AddExerciseRowView(
                         name: exercise.name,
                         initialValue: exercise.valueToAdd,
                         performAdd: { value in
@@ -23,7 +23,7 @@ struct AddExerciseList: View {
                         }
                     )
                 case .duration:
-                    AddExerciseRow(
+                    AddExerciseRowView(
                         name: exercise.name,
                         initialValue: exercise.valueToAdd,
                         performAdd: { value in
@@ -39,7 +39,7 @@ struct AddExerciseList: View {
 }
 
 #Preview {
-    AddExerciseList(
+    AddExerciseListView(
         addableExercises: [
             .init(name: "push ups", type: .reps, valueToAdd: 20),
             .init(name: "plank", type: .duration, valueToAdd: 60)

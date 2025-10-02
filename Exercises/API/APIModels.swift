@@ -1,8 +1,25 @@
 import Foundation
 
+enum APIError: Error {
+    case invalidURL
+    case httpError
+    case requestFailed
+}
 
-// This enum models the two possible row types:
-enum ExerciseType: Identifiable {
+struct Exercise: Decodable {
+    let name: String
+    let type: String
+    let reps: Int?
+    let duration: Int?
+}
+
+// Wrapper for { "exercises": [ ... ] }
+struct TodayExercisesResponse: Decodable {
+    let exercises: [Exercise]
+}
+
+// This enum models the two possible row types for UI display.
+enum ExerciseRow: Identifiable {
     case reps(name: String, value: String)
     case duration(name: String, value: String)
     
@@ -14,7 +31,7 @@ enum ExerciseType: Identifiable {
     }
 }
 
-struct RowAPI: Decodable {
+struct TodayTableRowResponse: Decodable {
     var date: String
     var values: [String]
     
