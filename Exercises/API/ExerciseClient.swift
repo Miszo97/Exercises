@@ -99,3 +99,8 @@ final class ExerciseClient {
         }
     }
 }
+
+// Top-level wrapper so tests can call `fetchTodayExercises()` directly.
+func fetchTodayExercises() async throws -> [Exercise] {
+    try await ExerciseClient().fetchTodayExercises()
+}

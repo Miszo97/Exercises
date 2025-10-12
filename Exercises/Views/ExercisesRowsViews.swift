@@ -86,17 +86,25 @@ struct AddExerciseRowView: View {
     }
 }
 
+private let previewClient = ExerciseClient()
+
 #Preview {
-    AddExerciseRowView(
-        name: "Push Ups",
-        initialValue: 20,
-        performAdd: { value in try await addRepsExercise(name: "Push Ups", reps: value) }
-    )
-    AddExerciseRowView(
-        name: "Plank",
-        initialValue: 60,
-        performAdd: { value in try await addDurationExercise(name: "Plank", duration: value, unit: "seconds") }
-    )
-    RepsExerciseRowView(name: "Push Ups", value: "12")
-    DurationExerciseRowView(name: "Plank", value: "60")
+    Group {
+        AddExerciseRowView(
+            name: "Push Ups",
+            initialValue: 20,
+            performAdd: { value in
+                try await previewClient.addRepsExercise(name: "Push Ups", reps: value)
+            }
+        )
+        AddExerciseRowView(
+            name: "Plank",
+            initialValue: 60,
+            performAdd: { value in
+                try await previewClient.addDurationExercise(name: "Plank", duration: value, unit: "seconds")
+            }
+        )
+        RepsExerciseRowView(name: "Push Ups", value: "12")
+        DurationExerciseRowView(name: "Plank", value: "60")
+    }
 }

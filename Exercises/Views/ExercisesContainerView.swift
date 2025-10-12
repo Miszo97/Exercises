@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct ExercisesContainerView: View {
-    var rows: [ExerciseType]
+    var rows: [ExerciseRow]
 
     var body: some View {
         if rows.isEmpty {
@@ -22,7 +22,9 @@ struct ExercisesContainerView: View {
                         DurationExerciseRowView(name: name, value: value)
                     }
                 }
-            }.listStyle(.plain).scrollContentBackground(.hidden)
+            }
+            .listStyle(.plain)
+            .scrollContentBackground(.hidden)
         }
     }
 }

@@ -7,10 +7,11 @@ enum APIError: Error {
 }
 
 struct Exercise: Decodable {
+    let date: String?
     let name: String
-    let type: String
     let reps: Int?
     let duration: Int?
+    let unit: String?
 }
 
 // Wrapper for { "exercises": [ ... ] }

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct AddExerciseListView: View {
     let addableExercises: [AddableExercise]
+    private let client = ExerciseClient()
 
     var body: some View {
         VStack {
@@ -19,7 +20,7 @@ struct AddExerciseListView: View {
                         name: exercise.name,
                         initialValue: exercise.valueToAdd,
                         performAdd: { value in
-                            try await addRepsExercise(name: exercise.name, reps: value)
+                            try await client.addRepsExercise(name: exercise.name, reps: value)
                         }
                     )
                 case .duration:
@@ -27,7 +28,7 @@ struct AddExerciseListView: View {
                         name: exercise.name,
                         initialValue: exercise.valueToAdd,
                         performAdd: { value in
-                            try await addDurationExercise(name: exercise.name, duration: value, unit: "seconds")
+                            try await client.addDurationExercise(name: exercise.name, duration: value, unit: "seconds")
                         }
                     )
                 }
@@ -46,3 +47,4 @@ struct AddExerciseListView: View {
         ]
     )
 }
+
