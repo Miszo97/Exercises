@@ -55,7 +55,6 @@ struct AddExerciseRowView: View {
                 TextField("Enter a number", text: $toAdd)
                     .keyboardType(.numberPad)
                     .focused($isInputActive)
-                    .textFieldStyle(.roundedBorder)
                     .frame(minWidth: 80)
                     .toolbar {
                         if isInputActive {
