@@ -17,16 +17,6 @@ struct MainView: View {
         VStack {
             TitleView().padding(10)
             
-            Button {
-                Task {
-                    await loadExercises()
-                }
-            } label: {
-                Image(systemName: "arrow.clockwise")
-                    .font(.title2)
-                    .accessibilityLabel("Get exercises")
-            }
-
             AddExerciseListView(addableExercises: addableExercises)
             
             Spacer()
