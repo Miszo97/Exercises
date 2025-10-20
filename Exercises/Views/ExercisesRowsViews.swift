@@ -47,13 +47,16 @@ struct AddExerciseRowView: View {
     }
 
     var body: some View {
-        HStack {
+        HStack(spacing: 12) {
             Text(name)
                 .fontWeight(.bold)
-            HStack {
+
+            HStack(spacing: 8) {
                 TextField("Enter a number", text: $toAdd)
                     .keyboardType(.numberPad)
                     .focused($isInputActive)
+                    .textFieldStyle(.roundedBorder)
+                    .frame(minWidth: 80)
                     .toolbar {
                         if isInputActive {
                             ToolbarItemGroup(placement: .keyboard) {
@@ -65,6 +68,7 @@ struct AddExerciseRowView: View {
                             }
                         }
                     }
+
                 Button(buttonText) {
                     Task {
                         buttonText = "Adding..."
@@ -72,17 +76,63 @@ struct AddExerciseRowView: View {
                         if let value = Int(toAdd) {
                             do {
                                 try await onAdd(value)
+                                // On success, log timestamp
+                                let key = "exercises_logs_\(name)"
+                                let nowISO8601 = ISO8601DateFormatter().string(from: Date())
+                                var logs = UserDefaults.standard.stringArray(forKey: key) ?? []
+                                logs.append(nowISO8601)
+                                UserDefaults.standard.set(logs, forKey: key)
                             } catch {
                                 print("Failed to add exercise:", error)
                             }
                         }
-
                     }
                 }
                 .bold()
+                .padding(.horizontal, 12)
+                .padding(.vertical, 6)
+                .background(
+                    Capsule()
+                        .fill(Color.accentColor.opacity(0.08)) // lighter, subtle tint
+                )
+                .foregroundColor(.accentColor)
+                .contentShape(Capsule())
+                .accessibilityLabel("Add \(name)")
             }
         }
         .padding(.horizontal)
+    }
+}
+
+struct AddRepsExerciseRowView: View {
+    let name: String
+    let initialValue: Int
+    private let client = ExerciseClient()
+
+    var body: some View {
+        AddExerciseRowView(
+            name: name,
+            initialValue: initialValue,
+            performAdd: { value in
+                try await client.addRepsExercise(name: name, reps: value)
+            }
+        )
+    }
+}
+
+struct AddDurationExerciseRowView: View {
+    let name: String
+    let initialValue: Int
+    private let client = ExerciseClient()
+
+    var body: some View {
+        AddExerciseRowView(
+            name: name,
+            initialValue: initialValue,
+            performAdd: { value in
+                try await client.addDurationExercise(name: name, duration: value, unit: "seconds")
+            }
+        )
     }
 }
 
@@ -104,6 +154,10 @@ private let previewClient = ExerciseClient()
                 try await previewClient.addDurationExercise(name: "Plank", duration: value, unit: "seconds")
             }
         )
+        // Wrapper previews
+        AddRepsExerciseRowView(name: "Squats", initialValue: 15)
+        AddDurationExerciseRowView(name: "Wall Sit", initialValue: 45)
+        
         RepsExerciseRowView(name: "Push Ups", value: "12")
         DurationExerciseRowView(name: "Plank", value: "60")
     }
