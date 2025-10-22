@@ -9,8 +9,6 @@
 import SwiftUI
 
 struct TitleView: View {
-    let api_url = "https://exercises-581797442525.europe-central2.run.app/table"
-
     var body: some View {
         HStack {
             HeaderView(content: "Exercises")

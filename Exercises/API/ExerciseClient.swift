@@ -1,7 +1,7 @@
 import Foundation
 
 final class ExerciseClient {
-    private let baseURL = "https://exercises-581797442525.europe-central2.run.app"
+    private let baseURL = "http://kevin224.mikrus.xyz:20224"
 
     func addRepsExercise(name: String, reps: Int, unit: String? = nil) async throws {
         let urlString = baseURL + "/reps"

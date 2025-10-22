@@ -1,6 +1,6 @@
 import SwiftUI
 
-let api_url = "https://exercises-581797442525.europe-central2.run.app/today"
+let api_url = "http://kevin224.mikrus.xyz:20224/table"
 
 enum AddableExerciseType {
     case reps
