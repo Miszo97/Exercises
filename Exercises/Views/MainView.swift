@@ -17,7 +17,9 @@ struct MainView: View {
         VStack {
             TitleView().padding(10)
             
-            AddExerciseListView(addableExercises: addableExercises)
+            AddExerciseListView(addableExercises: addableExercises, reload: {
+                await loadExercises()
+            })
             
             Spacer()
             ExercisesContainerView(rows: rows)

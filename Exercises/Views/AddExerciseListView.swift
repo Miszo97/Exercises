@@ -9,6 +9,7 @@ import SwiftUI
 
 struct AddExerciseListView: View {
     let addableExercises: [AddableExercise]
+    let reload: () async -> Void
     private let client = ExerciseClient()
 
     // Helper to fetch the latest timestamp for an exercise name
@@ -48,12 +49,14 @@ struct AddExerciseListView: View {
                 case .reps:
                     AddRepsExerciseRowView(
                         name: exercise.name,
-                        initialValue: exercise.valueToAdd
+                        initialValue: exercise.valueToAdd,
+                        reload: reload
                     )
                 case .duration:
                     AddDurationExerciseRowView(
                         name: exercise.name,
-                        initialValue: exercise.valueToAdd
+                        initialValue: exercise.valueToAdd,
+                        reload: reload
                     )
                 }
             }
@@ -73,7 +76,7 @@ struct AddExerciseListView: View {
         addableExercises: [
             .init(name: "push ups", type: .reps, valueToAdd: 20),
             .init(name: "plank", type: .duration, valueToAdd: 60)
-        ]
+        ],
+        reload: {}
     )
 }
-

@@ -34,15 +34,18 @@ struct AddExerciseRowView: View {
     @FocusState private var isInputActive: Bool
     let name: String
     let onAdd: (Int) async throws -> Void
+    let reload: () async -> Void
     @State private var buttonText: String = "Add"
 
     init(
         name: String,
         initialValue: Int,
-        performAdd: @escaping (Int) async throws -> Void
+        performAdd: @escaping (Int) async throws -> Void,
+        reload: @escaping () async -> Void
     ) {
         self.name = name
         self.onAdd = performAdd
+        self.reload = reload
         self._toAdd = State(initialValue: String(initialValue))
     }
 
@@ -81,6 +84,8 @@ struct AddExerciseRowView: View {
                                 var logs = UserDefaults.standard.stringArray(forKey: key) ?? []
                                 logs.append(nowISO8601)
                                 UserDefaults.standard.set(logs, forKey: key)
+                                // Refresh list
+                                await reload()
                             } catch {
                                 print("Failed to add exercise:", error)
                             }
@@ -106,6 +111,7 @@ struct AddExerciseRowView: View {
 struct AddRepsExerciseRowView: View {
     let name: String
     let initialValue: Int
+    let reload: () async -> Void
     private let client = ExerciseClient()
 
     var body: some View {
@@ -114,7 +120,8 @@ struct AddRepsExerciseRowView: View {
             initialValue: initialValue,
             performAdd: { value in
                 try await client.addRepsExercise(name: name, reps: value)
-            }
+            },
+            reload: reload
         )
     }
 }
@@ -122,6 +129,7 @@ struct AddRepsExerciseRowView: View {
 struct AddDurationExerciseRowView: View {
     let name: String
     let initialValue: Int
+    let reload: () async -> Void
     private let client = ExerciseClient()
 
     var body: some View {
@@ -130,7 +138,8 @@ struct AddDurationExerciseRowView: View {
             initialValue: initialValue,
             performAdd: { value in
                 try await client.addDurationExercise(name: name, duration: value, unit: "seconds")
-            }
+            },
+            reload: reload
         )
     }
 }
@@ -144,18 +153,20 @@ private let previewClient = ExerciseClient()
             initialValue: 20,
             performAdd: { value in
                 try await previewClient.addRepsExercise(name: "Push Ups", reps: value)
-            }
+            },
+            reload: {}
         )
         AddExerciseRowView(
             name: "Plank",
             initialValue: 60,
             performAdd: { value in
                 try await previewClient.addDurationExercise(name: "Plank", duration: value, unit: "seconds")
-            }
+            },
+            reload: {}
         )
         // Wrapper previews
-        AddRepsExerciseRowView(name: "Squats", initialValue: 15)
-        AddDurationExerciseRowView(name: "Wall Sit", initialValue: 45)
+        AddRepsExerciseRowView(name: "Squats", initialValue: 15, reload: {})
+        AddDurationExerciseRowView(name: "Wall Sit", initialValue: 45, reload: {})
         
         RepsExerciseRowView(name: "Push Ups", value: "12")
         DurationExerciseRowView(name: "Plank", value: "60")
