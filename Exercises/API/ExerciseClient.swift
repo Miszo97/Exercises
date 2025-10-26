@@ -3,7 +3,7 @@ import Foundation
 final class ExerciseClient {
     private let baseURL = "http://kevin224.mikrus.xyz:20224"
 
-    func addRepsExercise(name: String, reps: Int, unit: String? = nil) async throws {
+    func addRepsExercise(name: String, reps: Int) async throws {
         let urlString = baseURL + "/reps"
         guard let url = URL(string: urlString) else {
             throw APIError.invalidURL
@@ -13,13 +13,10 @@ final class ExerciseClient {
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
-        var body: [String: Any] = [
+        let body: [String: Any] = [
             "name": name,
             "reps": reps
         ]
-        if let unit = unit {
-            body["unit"] = unit
-        }
 
         request.httpBody = try JSONSerialization.data(withJSONObject: body)
 
@@ -35,7 +32,7 @@ final class ExerciseClient {
         }
     }
 
-    func addDurationExercise(name: String, duration: Int, unit: String? = "seconds") async throws {
+    func addDurationExercise(name: String, duration: Int) async throws {
         let urlString = baseURL + "/duration"
         guard let url = URL(string: urlString) else {
             throw APIError.invalidURL
@@ -45,13 +42,10 @@ final class ExerciseClient {
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
-        var body: [String: Any] = [
+        let body: [String: Any] = [
             "name": name,
             "duration": duration
         ]
-        if let unit = unit {
-            body["unit"] = unit
-        }
 
         request.httpBody = try JSONSerialization.data(withJSONObject: body)
 

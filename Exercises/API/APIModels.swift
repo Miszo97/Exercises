@@ -11,7 +11,6 @@ struct Exercise: Decodable {
     let name: String
     let reps: Int?
     let duration: Int?
-    let unit: String?
 }
 
 // Wrapper for { "exercises": [ ... ] }

@@ -16,14 +16,13 @@ struct RepsExerciseRowView: View {
 struct DurationExerciseRowView: View {
     var name: String
     var value: String
-    var unit: String = "seconds"
     
     var body: some View {
         HStack {
             HStack {
                 Text(name)
                     .fontWeight(.bold)
-                + Text(": \(value) ") + Text(unit)
+                + Text(": \(value) seconds")
             }
         }.padding(.horizontal)
     }
@@ -137,7 +136,7 @@ struct AddDurationExerciseRowView: View {
             name: name,
             initialValue: initialValue,
             performAdd: { value in
-                try await client.addDurationExercise(name: name, duration: value, unit: "seconds")
+                try await client.addDurationExercise(name: name, duration: value)
             },
             reload: reload
         )
@@ -160,7 +159,7 @@ private let previewClient = ExerciseClient()
             name: "Plank",
             initialValue: 60,
             performAdd: { value in
-                try await previewClient.addDurationExercise(name: "Plank", duration: value, unit: "seconds")
+                try await previewClient.addDurationExercise(name: "Plank", duration: value)
             },
             reload: {}
         )
