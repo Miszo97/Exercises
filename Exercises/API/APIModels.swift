@@ -41,3 +41,14 @@ struct TodayTableRowResponse: Decodable {
         values = try container.decode([String].self)
     }
 }
+
+// MARK: - Stats responses
+
+struct TotalRepsResponse: Decodable {
+    let total_reps: Int
+}
+
+struct TotalDurationResponse: Decodable {
+    let total_duration: Int
+}
+

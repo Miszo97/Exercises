@@ -92,6 +92,39 @@ final class ExerciseClient {
             }
         }
     }
+    
+    // MARK: - Stats (parameterized)
+    func fetchTotalReps(for exerciseName: String) async throws -> Int {
+        let encoded = exerciseName.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? exerciseName
+        let urlString = baseURL + "/exercises/\(encoded)/stats"
+        guard let url = URL(string: urlString) else {
+            throw APIError.invalidURL
+        }
+        let (data, response) = try await URLSession.shared.data(from: url)
+        if let http = response as? HTTPURLResponse, !(200..<300).contains(http.statusCode) {
+            let body = String(data: data, encoding: .utf8) ?? "No response body"
+            print("HTTP ERROR \(http.statusCode): \(body)")
+            throw APIError.httpError
+        }
+        let decoded = try JSONDecoder().decode(TotalRepsResponse.self, from: data)
+        return decoded.total_reps
+    }
+    
+    func fetchTotalDuration(for exerciseName: String) async throws -> Int {
+        let encoded = exerciseName.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? exerciseName
+        let urlString = baseURL + "/exercises/\(encoded)/stats"
+        guard let url = URL(string: urlString) else {
+            throw APIError.invalidURL
+        }
+        let (data, response) = try await URLSession.shared.data(from: url)
+        if let http = response as? HTTPURLResponse, !(200..<300).contains(http.statusCode) {
+            let body = String(data: data, encoding: .utf8) ?? "No response body"
+            print("HTTP ERROR \(http.statusCode): \(body)")
+            throw APIError.httpError
+        }
+        let decoded = try JSONDecoder().decode(TotalDurationResponse.self, from: data)
+        return decoded.total_duration
+    }
 }
 
 // Top-level wrapper so tests can call `fetchTodayExercises()` directly.

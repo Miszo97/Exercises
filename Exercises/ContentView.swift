@@ -7,9 +7,6 @@ enum AddableExerciseType {
     case duration
 }
 
-
-
-
 struct ContentView: View {
 
     var body: some View {
@@ -19,6 +16,11 @@ struct ContentView: View {
                     Label("Exercises", systemImage: "figure.walk")
                 }
 
+            Statistics()
+                .tabItem {
+                    Label("Statistics", systemImage: "chart.bar")
+                }
+
             SettingsView()
                 .tabItem {
                     Label("Settings", systemImage: "gearshape")
@@ -26,7 +28,6 @@ struct ContentView: View {
         }
         
     }
-
 
 }
 
