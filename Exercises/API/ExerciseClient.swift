@@ -125,6 +125,24 @@ final class ExerciseClient {
         let decoded = try JSONDecoder().decode(TotalDurationResponse.self, from: data)
         return decoded.total_duration
     }
+
+    // MARK: - Per-exercise entries
+    func fetchExerciseEntries(for exerciseName: String) async throws -> [Exercise] {
+        let encoded = exerciseName.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? exerciseName
+        let urlString = baseURL + "/exercises/\(encoded)"
+        guard let url = URL(string: urlString) else {
+            throw APIError.invalidURL
+        }
+        let (data, response) = try await URLSession.shared.data(from: url)
+        if let http = response as? HTTPURLResponse, !(200..<300).contains(http.statusCode) {
+            let body = String(data: data, encoding: .utf8) ?? "No response body"
+            print("HTTP ERROR \(http.statusCode): \(body)")
+            throw APIError.httpError
+        }
+        // The endpoint returns a raw array of entries: [{"date": "...", "name": "...", "reps": ..., "duration": ...}]
+        let exercises = try JSONDecoder().decode([Exercise].self, from: data)
+        return exercises
+    }
 }
 
 // Top-level wrapper so tests can call `fetchTodayExercises()` directly.

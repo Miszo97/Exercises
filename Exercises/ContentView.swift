@@ -20,11 +20,18 @@ struct ContentView: View {
                 .tabItem {
                     Label("Statistics", systemImage: "chart.bar")
                 }
+            
+            ExercisesListSettingsView()
+                .tabItem {
+                    Label("Add", systemImage: "plus.circle")
+                }
 
             SettingsView()
                 .tabItem {
                     Label("Settings", systemImage: "gearshape")
                 }
+
+
         }
         
     }
