@@ -22,5 +22,4 @@ struct ExercisesTests {
         let result = add_to_numbers(numbers[0], numbers[1])
         #expect(result == numbers[2])
     }
-
 }

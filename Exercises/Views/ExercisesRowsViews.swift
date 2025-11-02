@@ -28,6 +28,8 @@ struct DurationExerciseRowView: View {
     }
 }
 
+
+
 struct AddExerciseRowView: View {
     @State private var toAdd: String
     @FocusState private var isInputActive: Bool
@@ -70,37 +72,12 @@ struct AddExerciseRowView: View {
                         }
                     }
 
-                Button(buttonText) {
-                    Task {
-                        buttonText = "Adding..."
-                        defer { buttonText = "Add" }
-                        if let value = Int(toAdd) {
-                            do {
-                                try await onAdd(value)
-                                // On success, log timestamp
-                                let key = "exercises_logs_\(name)"
-                                let nowISO8601 = ISO8601DateFormatter().string(from: Date())
-                                var logs = UserDefaults.standard.stringArray(forKey: key) ?? []
-                                logs.append(nowISO8601)
-                                UserDefaults.standard.set(logs, forKey: key)
-                                // Refresh list
-                                await reload()
-                            } catch {
-                                print("Failed to add exercise:", error)
-                            }
-                        }
-                    }
-                }
-                .bold()
-                .padding(.horizontal, 12)
-                .padding(.vertical, 6)
-                .background(
-                    Capsule()
-                        .fill(Color.accentColor.opacity(0.08)) // lighter, subtle tint
+                AddExerciseButtonView(
+                    name: name,
+                    toAdd: $toAdd,
+                    onAdd: onAdd,
+                    reload: reload
                 )
-                .foregroundColor(.accentColor)
-                .contentShape(Capsule())
-                .accessibilityLabel("Add \(name)")
             }
         }
         .padding(.horizontal)
@@ -163,7 +140,6 @@ private let previewClient = ExerciseClient()
             },
             reload: {}
         )
-        // Wrapper previews
         AddRepsExerciseRowView(name: "Squats", initialValue: 15, reload: {})
         AddDurationExerciseRowView(name: "Wall Sit", initialValue: 45, reload: {})
         

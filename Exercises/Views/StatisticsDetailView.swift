@@ -203,8 +203,6 @@ struct Statistics: View {
         }
     }
     
-//    UserDefaults.standard.object(forKey: "exercises_settings_types") as! NSDictionary).filter({(key: Any, val: String) -> Bool in val=="reps"}
-
 
     private func loadStats() async {
         await MainActor.run {
