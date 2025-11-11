@@ -32,7 +32,7 @@ final class ExerciseClient {
         }
     }
 
-    func fetchTodayExercises() async throws -> [Exercise] {
+    func fetchTodayExercises() async throws -> Dictionary<String, Int> {
         let urlString = baseURL + "/today"
         let data = try await http.sendGetRequest(url: urlString)
         
@@ -41,17 +41,13 @@ final class ExerciseClient {
         let decoder = JSONDecoder()
         
         do {
-            let wrapped = try decoder.decode(TodayExercisesResponse.self, from: data)
-            return wrapped.exercises
+            let wrapped = try decoder.decode(Dictionary<String, Int>.self, from: data)
+            return wrapped
         } catch {
-            
             print("Decoding failed. \(error)")
             throw error
         }
     }
-    
-
-
 
     func fetchExerciseEntries(for exerciseName: String) async throws -> [Exercise] {
         let encoded = exerciseName.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? exerciseName
@@ -69,7 +65,6 @@ final class ExerciseClient {
         return decoded.total_reps
     }
     
-    
     func fetchTotalDuration(for exerciseName: String) async throws -> Int {
         let encoded = exerciseName.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? exerciseName
         let urlString = baseURL + "/exercises/\(encoded)" + "/stats"
@@ -77,9 +72,4 @@ final class ExerciseClient {
         let decoded = try JSONDecoder().decode(TotalDurationResponse.self, from: data)
         return decoded.total_duration
     }
-}
-
-// Top-level wrapper so tests can call `fetchTodayExercises()` directly.
-func fetchTodayExercises() async throws -> [Exercise] {
-    try await ExerciseClient().fetchTodayExercises()
 }

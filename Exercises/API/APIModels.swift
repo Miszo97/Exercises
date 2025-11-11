@@ -13,23 +13,6 @@ struct Exercise: Decodable {
     let duration: Int?
 }
 
-// Wrapper for { "exercises": [ ... ] }
-struct TodayExercisesResponse: Decodable {
-    let exercises: [Exercise]
-}
-
-// This enum models the two possible row types for UI display.
-enum ExerciseRow: Identifiable {
-    case reps(name: String, value: String)
-    case duration(name: String, value: String)
-    
-    var id: String {
-        switch self {
-        case .reps(let name, _): return "reps-\(name)"
-        case .duration(let name, _): return "duration-\(name)"
-        }
-    }
-}
 
 struct TodayTableRowResponse: Decodable {
     var date: String

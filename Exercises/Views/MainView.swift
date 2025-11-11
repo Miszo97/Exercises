@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct MainView: View {
-    @State private var rows: [ExerciseRow] = []
+    @State private var rows: Dictionary<String, Int> = [:]
     @State private var isLoading: Bool = false
     private let client = ExerciseClient()
     
@@ -19,10 +19,10 @@ struct MainView: View {
             
             AddExerciseListView(addableExercises: addableExercises, reload: {
                 await loadExercises()
-            })
+            },
+                                rows: $rows)
             
             Spacer()
-            ExercisesContainerView(rows: rows)
         }
         .padding()
         .task {
@@ -33,17 +33,7 @@ struct MainView: View {
     
     func loadExercises() async {
         do {
-            let exercises = try await client.fetchTodayExercises()
-            let loadedRows: [ExerciseRow] = exercises.compactMap { exercise in
-                // Derive row type from which value is present.
-                if let reps = exercise.reps {
-                    return .reps(name: exercise.name, value: String(reps))
-                } else if let duration = exercise.duration {
-                    return .duration(name: exercise.name, value: String(duration))
-                } else {
-                    return nil
-                }
-            }
+            let loadedRows = try await client.fetchTodayExercises()
             await MainActor.run {
                 self.rows = loadedRows
             }

@@ -11,6 +11,7 @@ struct AddExerciseListView: View {
     let addableExercises: [AddableExercise]
     let reload: () async -> Void
     private let client = ExerciseClient()
+    @Binding var rows: Dictionary<String, Int>
 
     // Helper to fetch the latest timestamp for an exercise name
     private func latestLogDate(for name: String) -> Date? {
@@ -47,17 +48,33 @@ struct AddExerciseListView: View {
             ForEach(sortedExercises) { exercise in
                 switch exercise.type {
                 case .reps:
-                    AddRepsExerciseRowView(
-                        name: exercise.name,
-                        initialValue: exercise.valueToAdd,
-                        reload: reload
-                    )
+                    VStack{
+                        AddRepsExerciseRowView(
+                            name: exercise.name,
+                            initialValue: exercise.valueToAdd,
+                            reload: reload
+                        )
+                        HStack{
+                        if let value = rows[exercise.name] {
+                            Text(String(value)).padding(.horizontal)
+                        }
+                            Spacer()
+                        }
+                    }
                 case .duration:
-                    AddDurationExerciseRowView(
-                        name: exercise.name,
-                        initialValue: exercise.valueToAdd,
-                        reload: reload
-                    )
+                    VStack{
+                        AddDurationExerciseRowView(
+                            name: exercise.name,
+                            initialValue: exercise.valueToAdd,
+                            reload: reload
+                        )
+                        HStack{
+                        if let value = rows[exercise.name] {
+                            Text(String(value)).padding(.horizontal)
+                        }
+                            Spacer()
+                        }
+                    }
                 }
             }
         }
@@ -77,6 +94,7 @@ struct AddExerciseListView: View {
             .init(name: "push ups", type: .reps, valueToAdd: 20),
             .init(name: "plank", type: .duration, valueToAdd: 60)
         ],
-        reload: {}
+        reload: {},
+        rows: .constant(["push ups": 15, "plank": 40])
     )
 }
