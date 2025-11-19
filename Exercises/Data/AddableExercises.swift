@@ -1,6 +1,6 @@
 import Foundation
 
-struct AddableExercise: Identifiable {
+struct AddableExercise: Identifiable, Equatable {
     let id = UUID()
     let name: String
     let type: AddableExerciseType

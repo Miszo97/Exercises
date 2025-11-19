@@ -1,7 +1,12 @@
 import Foundation
 
 final class ExerciseClient {
-    private let baseURL = "http://kevin224.mikrus.xyz:20224"
+    // Read base URL dynamically from UserDefaults so Settings can change it.
+    private var baseURL: String {
+        // Fallback to the original production URL if nothing stored.
+        UserDefaults.standard.string(forKey: "exercises_base_url") ?? "http://kevin224.mikrus.xyz:20224"
+    }
+
     private let http: HttpClient
 
     init(http: HttpClient = HttpClient()) {
@@ -73,3 +78,4 @@ final class ExerciseClient {
         return decoded.total_duration
     }
 }
+

@@ -1,8 +1,6 @@
 import SwiftUI
 
-let api_url = "http://kevin224.mikrus.xyz:20224/table"
-
-enum AddableExerciseType {
+enum AddableExerciseType: Equatable {
     case reps
     case duration
 }
@@ -30,14 +28,11 @@ struct ContentView: View {
                 .tabItem {
                     Label("Settings", systemImage: "gearshape")
                 }
-
-
         }
-        
     }
-
 }
 
 #Preview {
     ContentView()
 }
+

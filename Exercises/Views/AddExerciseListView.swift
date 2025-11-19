@@ -1,10 +1,3 @@
-//
-//  AddExerciseList.swift
-//  Exercises
-//
-//  Created by Artur Spek on 28/09/2025.
-//
-
 import SwiftUI
 
 struct AddExerciseListView: View {
@@ -70,7 +63,7 @@ struct AddExerciseListView: View {
                         )
                         HStack{
                         if let value = rows[exercise.name] {
-                            Text(String(value)).padding(.horizontal)
+                            Text(formatSecondsToMinutes(seconds: value)).padding(.horizontal)
                         }
                             Spacer()
                         }
@@ -95,6 +88,6 @@ struct AddExerciseListView: View {
             .init(name: "plank", type: .duration, valueToAdd: 60)
         ],
         reload: {},
-        rows: .constant(["push ups": 15, "plank": 40])
+        rows: .constant(["push ups": 15, "plank": 69])
     )
 }

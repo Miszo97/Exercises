@@ -16,9 +16,23 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		75D9E8342ECBD2C300F6425D /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		752D44382E06AF7800A90B09 /* Exercises.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Exercises.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7580FFB32E76F65E005DF751 /* ExercisesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ExercisesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		75D9E82A2ECBD2C300F6425D /* DeviceActivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DeviceActivity.framework; path = System/Library/Frameworks/DeviceActivity.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -43,6 +57,11 @@
 		7580FFB42E76F65E005DF751 /* ExercisesTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = ExercisesTests;
+			sourceTree = "<group>";
+		};
+		75D9E82C2ECBD2C300F6425D /* My product */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "My product";
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -70,6 +89,8 @@
 			children = (
 				752D443A2E06AF7800A90B09 /* Exercises */,
 				7580FFB42E76F65E005DF751 /* ExercisesTests */,
+				75D9E82C2ECBD2C300F6425D /* My product */,
+				75D9E8292ECBD2C300F6425D /* Frameworks */,
 				752D44392E06AF7800A90B09 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -83,6 +104,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		75D9E8292ECBD2C300F6425D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				75D9E82A2ECBD2C300F6425D /* DeviceActivity.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -93,6 +122,7 @@
 				752D44342E06AF7800A90B09 /* Sources */,
 				752D44352E06AF7800A90B09 /* Frameworks */,
 				752D44362E06AF7800A90B09 /* Resources */,
+				75D9E8342ECBD2C300F6425D /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
@@ -138,7 +168,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1640;
+				LastSwiftUpdateCheck = 2600;
 				LastUpgradeCheck = 2600;
 				TargetAttributes = {
 					752D44372E06AF7800A90B09 = {
