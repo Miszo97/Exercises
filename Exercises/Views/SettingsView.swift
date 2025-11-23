@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SettingsView: View {
     // Persist the selected base URL. Default to production.
-    @AppStorage("exercises_base_url") private var baseURL: String = "http://kevin224.mikrus.xyz:20224"
+    @AppStorage("exercises_base_url") private var baseURL: String = "http://kevin224.mikrus.xyz:40191"
     // Provide two environments to switch between.
     private let productionURL = "http://kevin224.mikrus.xyz:20224"
     private let devURL = "http://kevin224.mikrus.xyz:40191"
