@@ -30,7 +30,7 @@ struct HIITView: View {
     var body: some View {
         NavigationStack{
             List(trainings, id: \.self) { training in
-                NavigationLink(training.name, value: training) // Use HIITTraining as the value
+                NavigationLink(training.name, value: training)
             }
             .navigationDestination(for: HIITTraining.self) { training in
                 HIITTimerView(timers: training.timers)

@@ -1,5 +1,10 @@
 import SwiftUI
 
+
+class Timer {
+    
+}
+
 enum ExerciseTimer{
     case warm_up(Int)
     case brk(Int)
