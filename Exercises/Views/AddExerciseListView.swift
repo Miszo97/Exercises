@@ -36,39 +36,53 @@ struct AddExerciseListView: View {
         }
     }
 
+    private func statItem(for exercise: AddableExercise) -> StatItem {
+        StatItem(
+            title: exercise.name.capitalized,
+            value: "",                // not needed for detail fetch
+            subtitle: nil,
+            rawName: exercise.name    // used by API calls
+        )
+    }
+
     var body: some View {
         VStack {
             ForEach(sortedExercises) { exercise in
-                switch exercise.type {
-                case .reps:
-                    VStack{
-                        AddRepsExerciseRowView(
-                            name: exercise.name,
-                            initialValue: exercise.valueToAdd,
-                            reload: reload
-                        )
-                        HStack{
-                        if let value = rows[exercise.name] {
-                            Text(String(value)).padding(.horizontal)
+                NavigationLink {
+                    StatisticsDetailView(item: statItem(for: exercise))
+                } label: {
+                    switch exercise.type {
+                    case .reps:
+                        VStack{
+                            AddRepsExerciseRowView(
+                                name: exercise.name,
+                                initialValue: exercise.valueToAdd,
+                                reload: reload
+                            )
+                            HStack{
+                                if let value = rows[exercise.name] {
+                                    Text(String(value)).padding(.horizontal)
+                                }
+                                Spacer()
+                            }
                         }
-                            Spacer()
-                        }
-                    }
-                case .duration:
-                    VStack{
-                        AddDurationExerciseRowView(
-                            name: exercise.name,
-                            initialValue: exercise.valueToAdd,
-                            reload: reload
-                        )
-                        HStack{
-                        if let value = rows[exercise.name] {
-                            Text(formatSecondsToMinutes(seconds: value)).padding(.horizontal)
-                        }
-                            Spacer()
+                    case .duration:
+                        VStack{
+                            AddDurationExerciseRowView(
+                                name: exercise.name,
+                                initialValue: exercise.valueToAdd,
+                                reload: reload
+                            )
+                            HStack{
+                                if let value = rows[exercise.name] {
+                                    Text(formatSecondsToMinutes(seconds: value)).padding(.horizontal)
+                                }
+                                Spacer()
+                            }
                         }
                     }
                 }
+                .buttonStyle(.plain) // keep row’s original look
             }
         }
         .padding(.bottom, 150)
@@ -82,12 +96,14 @@ struct AddExerciseListView: View {
 }
 
 #Preview {
-    AddExerciseListView(
-        addableExercises: [
-            .init(name: "push ups", type: .reps, valueToAdd: 20),
-            .init(name: "plank", type: .duration, valueToAdd: 60)
-        ],
-        reload: {},
-        rows: .constant(["push ups": 15, "plank": 69])
-    )
+    NavigationStack {
+        AddExerciseListView(
+            addableExercises: [
+                .init(name: "push ups", type: .reps, valueToAdd: 20),
+                .init(name: "plank", type: .duration, valueToAdd: 60)
+            ],
+            reload: {},
+            rows: .constant(["push ups": 15, "plank": 69])
+        )
+    }
 }

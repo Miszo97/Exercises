@@ -10,16 +10,13 @@ struct ContentView: View {
 
     var body: some View {
         TabView {
-            MainView()
-                .tabItem {
-                    Label("Exercises", systemImage: "figure.walk")
-                }
+            NavigationStack {
+                MainView()
+            }
+            .tabItem {
+                Label("Exercises", systemImage: "figure.walk")
+            }
 
-            Statistics()
-                .tabItem {
-                    Label("Statistics", systemImage: "chart.bar")
-                }
-            
             ExercisesListSettingsView()
                 .tabItem {
                     Label("Add", systemImage: "plus.circle")
@@ -40,4 +37,3 @@ struct ContentView: View {
 #Preview {
     ContentView()
 }
-
