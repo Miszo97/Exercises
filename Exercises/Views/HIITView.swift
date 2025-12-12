@@ -23,7 +23,7 @@ struct HIITTraining: Hashable{
 struct HIITView: View {
     let trainings = [HIITTraining(name: "Foot stabilization",
                                 timers: [ExerciseTimer.warm_up(10), ExerciseTimer.exercise("left foot stabilization", 30), ExerciseTimer.brk(10), ExerciseTimer.exercise("right foot stabilization", 30), ExerciseTimer.brk(10),
-                                         ExerciseTimer.exercise("left foot stabilization", 30),ExerciseTimer.brk(10),
+                                         ExerciseTimer.exercise("right foot stabilization", 30),ExerciseTimer.brk(10),
                                          ExerciseTimer.exercise("right foot stabilization", 30)])]
                                   
     

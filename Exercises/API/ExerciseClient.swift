@@ -1,4 +1,5 @@
 import Foundation
+import Playgrounds
 
 final class ExerciseClient {
     // Read base URL dynamically from UserDefaults so Settings can change it.
@@ -54,12 +55,23 @@ final class ExerciseClient {
         }
     }
 
-    func fetchExerciseEntries(for exerciseName: String) async throws -> [Exercise] {
-        let encoded = exerciseName.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? exerciseName
-        let urlString = baseURL + "/exercises/\(encoded)"
-        let data = try await http.sendGetRequest(url: urlString)
-        let exercises = try JSONDecoder().decode([Exercise].self, from: data)
-        return exercises
+    func fetchExerciseEntries(for exerciseName: String, lastDays: Int = 7) async throws -> [Exercise] {
+        guard var components = URLComponents(string: baseURL) else {
+            throw APIError.invalidURL
+        }
+        
+        components.path = (components.path + "/exercises/\(exerciseName)")
+        
+        components.queryItems = [
+                URLQueryItem(name: "last_days", value: String(lastDays))
+            ]
+
+        guard let url = components.url else {
+            throw APIError.invalidURL
+        }
+        
+        let data = try await http.sendGetRequest(url: url.absoluteString)
+        return try JSONDecoder().decode([Exercise].self, from: data)
     }
     
     func fetchTotalReps(for exerciseName: String) async throws -> Int {
@@ -77,5 +89,13 @@ final class ExerciseClient {
         let decoded = try JSONDecoder().decode(TotalDurationResponse.self, from: data)
         return decoded.total_duration
     }
+    
 }
 
+
+#Playground {
+    var components = URLComponents()
+    components.host = "example.com"
+    components.path = "/test"
+    let url = components.url  // nil - no scheme set
+}

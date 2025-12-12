@@ -6,25 +6,30 @@ enum AddableExerciseType: Equatable {
 }
 
 struct ContentView: View {
-    let timers = [ExerciseTimer.warm_up(10), ExerciseTimer.exercise("plank", 60), ExerciseTimer.brk(5), ExerciseTimer.exercise("plank both sides", 60), ExerciseTimer.brk(5), ExerciseTimer.exercise("plank both sides", 60)]
+    let timers = [
+        ExerciseTimer.warm_up(10), ExerciseTimer.exercise("plank", 60),
+        ExerciseTimer.brk(5), ExerciseTimer.exercise("plank both sides", 60),
+        ExerciseTimer.brk(5), ExerciseTimer.exercise("plank both sides", 60),
+    ]
 
     var body: some View {
         TabView {
-            NavigationStack {
-                MainView()
-            }
-            .tabItem {
-                Label("Exercises", systemImage: "figure.walk")
-            }
+            MainView()
+                .tabItem {
+                    Label("Exercises", systemImage: "figure.walk")
+                }
 
             ExercisesListSettingsView()
                 .tabItem {
                     Label("Add", systemImage: "plus.circle")
                 }
-            
+
             HIITView()
                 .tabItem {
-                    Label("HIIT", systemImage: "figure.highintensity.intervaltraining")
+                    Label(
+                        "HIIT",
+                        systemImage: "figure.highintensity.intervaltraining"
+                    )
                 }
             SettingsView()
                 .tabItem {
