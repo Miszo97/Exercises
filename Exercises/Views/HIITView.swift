@@ -21,12 +21,31 @@ struct HIITTraining: Hashable{
 }
 
 struct HIITView: View {
-    let trainings = [HIITTraining(name: "Foot stabilization",
-                                timers: [ExerciseTimer.warm_up(10), ExerciseTimer.exercise("left foot stabilization", 30), ExerciseTimer.brk(10), ExerciseTimer.exercise("right foot stabilization", 30), ExerciseTimer.brk(10),
-                                         ExerciseTimer.exercise("right foot stabilization", 30),ExerciseTimer.brk(10),
-                                         ExerciseTimer.exercise("right foot stabilization", 30)])]
+    let trainings = [
+        HIITTraining(
+            name: "Foot stabilization",
+            timers: [
+                ExerciseTimer.warm_up(10),
+                ExerciseTimer.exercise("left foot stabilization", 30),
+                ExerciseTimer.brk(10),
+                ExerciseTimer.exercise("right foot stabilization", 30),
+                ExerciseTimer.brk(10),
+                ExerciseTimer.exercise("right foot stabilization", 30)
+            ]
+        ),
+        HIITTraining(
+            name: "Plank",
+            timers: [
+                ExerciseTimer.warm_up(10),
+                ExerciseTimer.exercise("plank", 60),
+                ExerciseTimer.brk(10),
+                ExerciseTimer.exercise("plank left side", 60),
+                ExerciseTimer.brk(10),
+                ExerciseTimer.exercise("plank right side", 60)
+            ]
+        )
+    ]
                                   
-    
     var body: some View {
         NavigationStack{
             List(trainings, id: \.self) { training in

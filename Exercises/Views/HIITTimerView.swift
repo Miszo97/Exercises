@@ -1,4 +1,5 @@
 import Combine
+import AudioToolbox
 import SwiftUI
 
 enum ExerciseTimer {
@@ -110,7 +111,7 @@ struct HIITTimerView: View {
         }
         .onReceive(timer.$currentTimerIndex, perform: { currentTimerIndex in
             
-            
+            print("index change")
             if case .exercise(let name, let duration) = timers[
                 previousTimerIndex
             ] {
@@ -118,6 +119,7 @@ struct HIITTimerView: View {
                     "Sending up: ",
                     name, duration
                 )
+                AudioServicesPlaySystemSound(SystemSoundID(1009))
                 Task {
                     try await client.addDurationExercise(name: name, duration: duration)
                 }

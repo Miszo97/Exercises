@@ -18,6 +18,7 @@ class HIITTimer: ObservableObject {
 
     
     init(timers: [ExerciseTimer]) {
+        print("HIITTimer init")
         self.timers = timers
         currentTimer = timers[0]
         currentSeconds = 0

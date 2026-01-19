@@ -94,10 +94,8 @@ struct StatisticsDetailView: View {
 
     private func createChartData() {
         let d = Dictionary(
-            uniqueKeysWithValues: self.entries.map { ($0.date, $0.reps) }
+            uniqueKeysWithValues: self.entries.map { ($0.date, $0.duration ?? $0.reps) }
         )
-
-        print(d)
 
         let format = DateFormatter()
         format.dateFormat = "yyyy-MM-dd"
