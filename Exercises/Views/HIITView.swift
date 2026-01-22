@@ -20,6 +20,8 @@ struct HIITTraining: Hashable{
     }
 }
 
+
+
 struct HIITView: View {
     let trainings = [
         HIITTraining(
@@ -42,6 +44,19 @@ struct HIITView: View {
                 ExerciseTimer.exercise("plank left side", 60),
                 ExerciseTimer.brk(10),
                 ExerciseTimer.exercise("plank right side", 60)
+            ]
+        ),
+        HIITTraining(
+            name: "Foot stabilization foam pad closed eyes",
+            timers: [
+                ExerciseTimer.warm_up(5),
+                ExerciseTimer.exercise("left foot stabilization foam pad closed eyes", 30),
+                ExerciseTimer.brk(5),
+                ExerciseTimer.exercise("right foot stabilization foam pad closed eyes", 30),
+                ExerciseTimer.brk(5),
+                ExerciseTimer.exercise("left foot stabilization foam pad closed eyes", 30),
+                ExerciseTimer.brk(5),
+                ExerciseTimer.exercise("right foot stabilization foam pad closed eyes", 30),
             ]
         )
     ]
