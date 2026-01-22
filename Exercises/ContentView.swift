@@ -6,12 +6,6 @@ enum AddableExerciseType: Equatable {
 }
 
 struct ContentView: View {
-    let timers = [
-        ExerciseTimer.warm_up(10), ExerciseTimer.exercise("plank", 60),
-        ExerciseTimer.brk(5), ExerciseTimer.exercise("plank both sides", 60),
-        ExerciseTimer.brk(5), ExerciseTimer.exercise("plank both sides", 60),
-    ]
-
     var body: some View {
         TabView {
             MainView()

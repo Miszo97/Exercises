@@ -58,7 +58,21 @@ struct HIITView: View {
                 ExerciseTimer.brk(5),
                 ExerciseTimer.exercise("right foot stabilization foam pad closed eyes", 30),
             ]
+        ),
+        HIITTraining(
+            name: "Ankle stabilization with closed eyes",
+            timers: [
+                ExerciseTimer.warm_up(5),
+                ExerciseTimer.exercise("left ankle stabilization with closed eyes", 30),
+                ExerciseTimer.brk(5),
+                ExerciseTimer.exercise("right ankle stabilization with closed eyes", 30),
+                ExerciseTimer.brk(5),
+                ExerciseTimer.exercise("left ankle stabilization with closed eyes", 30),
+                ExerciseTimer.brk(5),
+                ExerciseTimer.exercise("right ankle stabilization with closed eyes", 30),
+            ]
         )
+        
     ]
                                   
     var body: some View {
