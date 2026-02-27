@@ -28,7 +28,6 @@ struct StatisticsDetailView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            // Header
             VStack(spacing: 8) {
                 Text(item.title)
                     .font(.largeTitle)

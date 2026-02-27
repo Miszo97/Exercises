@@ -1,10 +1,3 @@
-//
-//  HIITView.swift
-//  Exercises
-//
-//  Created by Artur Spek on 21/11/2025.
-//
-
 import SwiftUI
 
 struct HIITTraining: Hashable{
@@ -60,16 +53,16 @@ struct HIITView: View {
             ]
         ),
         HIITTraining(
-            name: "Ankle stabilization with closed eyes",
+            name: "Ankle stabilization",
             timers: [
                 ExerciseTimer.warm_up(5),
-                ExerciseTimer.exercise("left ankle stabilization with closed eyes", 30),
+                ExerciseTimer.exercise("left ankle stabilization", 30),
                 ExerciseTimer.brk(5),
-                ExerciseTimer.exercise("right ankle stabilization with closed eyes", 30),
+                ExerciseTimer.exercise("right ankle stabilization", 30),
                 ExerciseTimer.brk(5),
-                ExerciseTimer.exercise("left ankle stabilization with closed eyes", 30),
+                ExerciseTimer.exercise("left ankle stabilization", 30),
                 ExerciseTimer.brk(5),
-                ExerciseTimer.exercise("right ankle stabilization with closed eyes", 30),
+                ExerciseTimer.exercise("right ankle stabilization", 30),
             ]
         )
         

@@ -1,17 +1,10 @@
-//
-//  ExercisesListSettingsView.swift
-//  Exercises
-//
-//  Created by Artur Spek on 31/10/2025.
-//
-
 import SwiftUI
 
 struct ExercisesListSettingsView: View {
     @State private var newExerciseName: String = ""
     @State private var selectedType: AddableExerciseType = .reps
     @State private var exercises: [String] = []
-    @State private var typesByName: [String: String] = [:] // name -> "reps" | "duration"
+    @State private var typesByName: [String: String] = [:]
 
     private let storageKey = "exercises_settings_list"
     private let typesKey = "exercises_settings_types"

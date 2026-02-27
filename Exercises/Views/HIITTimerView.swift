@@ -86,25 +86,6 @@ struct HIITTimerView: View {
         }
         .onAppear {
             UIApplication.shared.isIdleTimerDisabled = true
-            
-//            timer.$currentTimerIndex.sink { currentTimerIndex in
-//
-//
-//            if case .exercise(let name, let duration) = timers[
-//                previousTimerIndex
-//            ] {
-//                print(
-//                    "Sending up: ",
-//                    name, duration
-//                )
-//                Task {
-//                    try await client.addDurationExercise(name: name, duration: duration)
-//                }
-//                
-//            }
-//                previousTimerIndex = currentTimerIndex
-//        
-//            }.store(in: &cancellables)
         }
         .onDisappear {
             UIApplication.shared.isIdleTimerDisabled = false

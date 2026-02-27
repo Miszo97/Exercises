@@ -1,10 +1,3 @@
-//
-//  ConvertSecondsToMinutes.swift
-//  Exercises
-//
-//  Created by Artur Spek on 13/11/2025.
-//
-
 import Foundation
 
 

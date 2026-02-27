@@ -35,7 +35,6 @@ struct MainView: View {
             }
         } catch {
             print("Failed to load exercises:", error)
-            // Optionally display error to user
         }
     }
 

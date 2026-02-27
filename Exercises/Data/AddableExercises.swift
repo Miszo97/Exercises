@@ -7,7 +7,6 @@ struct AddableExercise: Identifiable, Equatable {
     let valueToAdd: Int
 }
 
-// Read names and types from UserDefaults
 private func loadCustomExerciseNames() -> [String] {
     UserDefaults.standard.stringArray(forKey: "exercises_settings_list") ?? []
 }
@@ -23,7 +22,6 @@ private func typeFromString(_ str: String?) -> AddableExerciseType {
     }
 }
 
-// Helper to read the per-exercise "to add" value with a default based on type
 private func valueToAdd(for name: String, type: AddableExerciseType) -> Int {
     let key = "exercises_settings_\(name)_to_add"
     let stored = UserDefaults.standard.integer(forKey: key)
@@ -36,7 +34,6 @@ private func valueToAdd(for name: String, type: AddableExerciseType) -> Int {
     }
 }
 
-// Build addable exercises from the user-managed list in settings
 var addableExercises: [AddableExercise] {
     let names = loadCustomExerciseNames()
     let types = loadTypesMap()
