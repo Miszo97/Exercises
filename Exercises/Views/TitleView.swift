@@ -3,7 +3,7 @@ import SwiftUI
 struct TitleView: View {
     var body: some View {
         HStack {
-            HeaderView(content: "Exercises")
+            HeaderView(content: "Exercises App")
         }
     }
 }
