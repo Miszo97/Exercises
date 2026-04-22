@@ -1,0 +1,1 @@
+{"fullProductName":"Exercises.app","builtProductsDir":"\/Users\/artur\/Library\/Developer\/Xcode\/DerivedData\/Exercises-bggazmreckomqffbqwjrzacjmxoh\/Build\/Products\/Debug-iphonesimulator","executablePath":"Exercises.app\/Exercises"}
