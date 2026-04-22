@@ -1,5 +1,5 @@
-import SwiftUI
 import AudioToolbox
+import SwiftUI
 
 struct SystmeSoundEffectDemo: View {
     private let soundRange = 1...1015
@@ -15,20 +15,18 @@ struct SystmeSoundEffectDemo: View {
 
     var body: some View {
         VStack(spacing: 16) {
-            Button(action: {
-                AudioServicesPlaySystemSound(currentID)
-                advanceID()
-            }, label: {
-                Text("Play Sound (ID: \(currentID))")
-                    .foregroundStyle(Color.white)
-                    .padding()
-                    .background(RoundedRectangle(cornerRadius: 16).fill(.black))
-            })
+            Button(
+                action: {
+                    AudioServicesPlaySystemSound(currentID)
+                    advanceID()
+                },
+                label: {
+                    Text("Play Sound (ID: \(currentID))")
+                        .foregroundStyle(Color.white)
+                        .padding()
+                        .background(RoundedRectangle(cornerRadius: 16).fill(.black))
+                })
         }
         .padding()
     }
-}
-
-#Preview {
-    SystmeSoundEffectDemo()
 }

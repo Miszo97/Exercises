@@ -29,8 +29,6 @@ struct ContentView: View {
                 .tabItem {
                     Label("Settings", systemImage: "gearshape")
                 }
-            
-            SystmeSoundEffectDemo()
         }
     }
 }
