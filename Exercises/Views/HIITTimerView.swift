@@ -1,5 +1,5 @@
-import Combine
 import AudioToolbox
+import Combine
 import SwiftUI
 
 enum ExerciseTimer {
@@ -90,24 +90,26 @@ struct HIITTimerView: View {
         .onDisappear {
             UIApplication.shared.isIdleTimerDisabled = false
         }
-        .onReceive(timer.$currentTimerIndex, perform: { currentTimerIndex in
-            
-            print("index change")
-            if case .exercise(let name, let duration) = timers[
-                previousTimerIndex
-            ] {
-                print(
-                    "Sending up: ",
-                    name, duration
-                )
-                AudioServicesPlaySystemSound(SystemSoundID(1009))
-                Task {
-                    try await client.addDurationExercise(name: name, duration: duration)
+        .onReceive(
+            timer.$currentTimerIndex,
+            perform: { currentTimerIndex in
+
+                print("index change 2")
+                if case .exercise(let name, let duration) = timers[
+                    previousTimerIndex
+                ] {
+                    print(
+                        "Sending up: ",
+                        name, duration
+                    )
+                    AudioServicesPlaySystemSound(SystemSoundID(1009))
+                    Task {
+                        try await client.addDurationExercise(name: name, duration: duration)
+                    }
+
                 }
-                
-            }
                 previousTimerIndex = currentTimerIndex
-        
+
             })
     }
 }

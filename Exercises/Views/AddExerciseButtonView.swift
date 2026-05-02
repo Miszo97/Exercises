@@ -6,6 +6,8 @@ struct AddExerciseButtonView: View {
     let onAdd: (Int) async throws -> Void
     let reload: () async -> Void
     @State private var buttonText: String = "Add"
+    @State private var showAlert = false
+    @State private var alertMessage = ""
 
     var body: some View {
         Button(buttonText) {
@@ -20,10 +22,17 @@ struct AddExerciseButtonView: View {
                         var logs = UserDefaults.standard.stringArray(forKey: key) ?? []
                         logs.append(nowISO8601)
                         UserDefaults.standard.set(logs, forKey: key)
+                        alertMessage = "\(name) exercise added successfully!"
+                        showAlert = true
                         await reload()
                     } catch {
+                        alertMessage = "Failed to add exercise: \(error.localizedDescription)"
+                        showAlert = true
                         print("Failed to add exercise:", error)
                     }
+                } else {
+                    alertMessage = "Please enter a valid number"
+                    showAlert = true
                 }
             }
         }
@@ -37,5 +46,10 @@ struct AddExerciseButtonView: View {
         .foregroundColor(.accentColor)
         .contentShape(Capsule())
         .accessibilityLabel("Add \(name)")
+        .alert("Exercise Added", isPresented: $showAlert) {
+            Button("OK") {}
+        } message: {
+            Text(alertMessage)
+        }
     }
 }

@@ -13,6 +13,7 @@ final class ExerciseClient {
     }
 
     func addRepsExercise(name: String, reps: Int) async throws {
+        print("Trying to send an exercise")
         let urlString = baseURL + "/reps"
         let body: [String: Any] = [
             "name": name,

@@ -30,7 +30,7 @@ struct ExercisesListSettingsView: View {
             }
 
             if exercises.isEmpty {
-                Text("No custom exercises yet.")
+                Text("No custom exercises yet baby.")
                     .foregroundStyle(.secondary)
             } else {
                 List {

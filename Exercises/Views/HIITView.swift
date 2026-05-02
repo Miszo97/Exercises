@@ -1,21 +1,22 @@
 import SwiftUI
 
-struct HIITTraining: Hashable{
+struct HIITTraining: Hashable {
     let name: String
     let timers: [ExerciseTimer]
-    
+
     func hash(into hasher: inout Hasher) {
         hasher.combine(name)
     }
-    
+
     static func == (lhs: HIITTraining, rhs: HIITTraining) -> Bool {
         return lhs.name == rhs.name
     }
 }
 
-
-
 struct HIITView: View {
+    @State private var showAlertMessage = false
+    @State private var alertMessage = ""
+
     let trainings = [
         HIITTraining(
             name: "Foot stabilization",
@@ -25,18 +26,18 @@ struct HIITView: View {
                 ExerciseTimer.brk(10),
                 ExerciseTimer.exercise("right foot stabilization", 30),
                 ExerciseTimer.brk(10),
-                ExerciseTimer.exercise("right foot stabilization", 30)
+                ExerciseTimer.exercise("right foot stabilization", 30),
             ]
         ),
         HIITTraining(
-            name: "Plank",
+            name: "Plank test 2",
             timers: [
                 ExerciseTimer.warm_up(10),
                 ExerciseTimer.exercise("plank", 60),
                 ExerciseTimer.brk(10),
                 ExerciseTimer.exercise("plank left side", 60),
                 ExerciseTimer.brk(10),
-                ExerciseTimer.exercise("plank right side", 60)
+                ExerciseTimer.exercise("plank right side", 60),
             ]
         ),
         HIITTraining(
@@ -64,17 +65,36 @@ struct HIITView: View {
                 ExerciseTimer.brk(5),
                 ExerciseTimer.exercise("right ankle stabilization", 30),
             ]
-        )
-        
+        ),
+
     ]
-                                  
+
+    func showAlert() {
+        alertMessage = "Select a training from the list below to begin"
+        showAlertMessage = true
+    }
+
     var body: some View {
-        NavigationStack{
-            List(trainings, id: \.self) { training in
+        NavigationStack {
+            VStack {
+                Button(action: {
+                    showAlert()
+                }) {
+                    Text("Start Training")
+                }
+            }
+
+            List(trainings, id: \.self) {
+                training in
                 NavigationLink(training.name, value: training)
             }
             .navigationDestination(for: HIITTraining.self) { training in
                 HIITTimerView(timers: training.timers)
+            }
+            .alert("HIIT Training", isPresented: $showAlertMessage) {
+                Button("OK") {}
+            } message: {
+                Text(alertMessage)
             }
         }
     }

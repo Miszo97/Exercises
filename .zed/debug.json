@@ -1,5 +1,15 @@
-// Project-local debug tasks
-//
-// For more documentation on how to configure debug tasks,
-// see: https://zed.dev/docs/debugger
-[]
+[
+  {
+    "label": "SwiftDebug",
+    "adapter": "Swift",
+    "request": "launch",
+    // This says we want xcede to manage the process.
+    // You could pass the path to an executable here, and that
+    // would just launch lldb on that executable, as if you
+    // weren't using xcede.
+    "program": "xcede:",
+
+    // This will build your app first, and is optional.
+    "build": "SwiftBuild",
+  },
+]
